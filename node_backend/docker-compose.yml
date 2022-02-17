@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  app-backend:
+    build: .
+    entrypoint: sh -c "npm install && npm start"
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/app-backend
+
+  mongo:
+    image: mongo:4.2
+    ports: 
+      - "27017:27017"
