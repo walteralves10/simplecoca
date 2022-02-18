@@ -2,6 +2,11 @@ const express = require('express');
 const Caixa = require('./models/caixa');
 const router = express.Router();
 
+//Get teste
+router.get('/', async (req, res) => {
+    res.json({msg: 'Hello Word!'});
+});
+
 // Get all caixa
 router.get('/caixas', async (req, res) => {
 

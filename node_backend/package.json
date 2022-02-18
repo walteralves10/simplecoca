@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon ./index.js localhost 3000"
+    "start": "npx nodemon ./index.js localhost 8000"
   },
   "keywords": [],
   "author": "",

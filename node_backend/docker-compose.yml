@@ -6,7 +6,7 @@ services:
     build: .
     entrypoint: sh -c "npm install && npm start"
     ports:
-      - 3000:3000
+      - 8000:8000
     volumes:
       - .:/home/node/app-backend
 

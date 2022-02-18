@@ -21,7 +21,7 @@ mongoose
         res.json({ message: "Oi Express!" });
     });*/
 
-    app.listen(3000, () => {
+    app.listen(8000, () => {
         console.log("Servidor iniciado!");
     });
 
