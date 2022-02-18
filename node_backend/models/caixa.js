@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
-    //id: ObjectId,
-    valor_entrada: Number,
-    valor_saida: Number,
+    valor: Number,
     descricao: String,
-    status_movimento: Number,
-    data_insercao: Date
+    status_movimento: String,
+    data_insercao: String
 });
 
 module.exports = mongoose.model("caixa", schema);

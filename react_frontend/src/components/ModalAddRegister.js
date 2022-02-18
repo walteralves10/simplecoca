@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -8,6 +8,7 @@ import Formulario from './Formulario';
 
 export default function ModalAddRegister() {
 
+        const formRef = useRef();
         const [show, setShow] = useState(false);
   
         const handleClose = () => setShow(false);
@@ -15,7 +16,14 @@ export default function ModalAddRegister() {
 
         return (
             <>
-              <Button variant="primary" onClick={handleShow}>
+              <Button 
+              style={{
+                float: "right",
+                margin: "10px 0px",
+              }} 
+              variant="primary" 
+              onClick={handleShow}
+              >
                 Adicionar
               </Button>
         
@@ -24,14 +32,23 @@ export default function ModalAddRegister() {
                   <Modal.Title>Movimentação</Modal.Title>
                 </Modal.Header>
                 
-                <Modal.Body> formulario
+                <Modal.Body>
       
-                    <Formulario />
+                    <Formulario handleClose={handleClose} formRef={formRef} />
       
                 </Modal.Body>
                 
                 <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
+
+                <Button variant="primary" 
+                  onClick={()=>formRef.current.dispatchEvent(
+                    new Event("submit", { bubbles: true, cancelable: true })
+                  )}
+                >
+                    salvar
+                </Button>
+
+                <Button variant="secondary" onClick={handleClose}>
                     Fechar
                   </Button>
                 </Modal.Footer>

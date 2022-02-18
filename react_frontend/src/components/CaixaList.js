@@ -1,18 +1,52 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 
 import Modal from './ModalAddRegister';
 
-export default class caixaList extends React.Component {
-  render() {
-    return (
-      <div>
+export default function CaixaList() {
 
-        <div>
+    const [caixaEntradas, setCaixaEntradas] = useState([]);
+    const [caixaSaidas, setCaixaSaidas] = useState([]);
+    const [caixaTotal, setCaixaTotal] = useState(0);
+
+    useEffect(() => {
+        (async () => {
+
+            const entradas = await axios.get("http://localhost:8000/api/caixas/entradas");
+            setCaixaEntradas(entradas.data);
+
+            const saidas = await axios.get("http://localhost:8000/api/caixas/saidas");
+            setCaixaSaidas(saidas.data);
+
+            const total = await axios.get("http://localhost:8000/api/caixas/total");
+            setCaixaTotal(total.data.total);
+
+        })();
+    }, []);
+
+    return (
+      <div className="lista">
+
+        <div className="div-modal">
             <Modal />
         </div>  
 
-        <div>
+        <div className="div-total">
+        <Table striped bordered hover>
+
+                <tbody>
+
+                    <tr>
+                    <th>Total</th>
+                    <th>{caixaTotal}</th>
+                    </tr>
+
+                </tbody>
+            </Table>  
+        </div>
+
+        <div className="div-table-entradas">
             <h4>Entradas</h4>
 
             <Table striped bordered hover>
@@ -22,24 +56,26 @@ export default class caixaList extends React.Component {
                     <th>Data Inserção</th>
                     <th>Valor</th>
                     <th>Descrição</th>
-                    <th>Status movimento</th>
                     </tr>
 
                 </thead>
                 <tbody>
 
-                    <tr>
-                    <td>17-02-2022</td>
-                    <td>2,00</td>
-                    <td>Vaquinha de alguem</td>
-                    <td>Entrada</td>
-                    </tr>
+                    {caixaEntradas.map(value => {
+                        return(
+                            <tr key={value._id}>
+                                <td>{value.data_insercao}</td>
+                                <td>{value.valor.toFixed(2)}</td>
+                                <td>{value.descricao}</td>
+                            </tr>
+                        );
+                    })}
 
                 </tbody>
             </Table>        
         </div>
 
-        <div>
+        <div className="div-table-saida">
             <h4>Saidas</h4>
 
             <Table striped bordered hover>
@@ -49,19 +85,20 @@ export default class caixaList extends React.Component {
                     <th>Data Inserção</th>
                     <th>Valor</th>
                     <th>Descrição</th>
-                    <th>Status movimento</th>
                     </tr>
 
                 </thead>
                 <tbody>
 
-                    <tr>
-                    <td>17-02-2022</td>
-                    <td>7,00</td>
-                    <td>Coca-Cola</td>
-                    <td>Saida</td>
-                    </tr>
-
+                    {caixaSaidas.map(value => {
+                        return(
+                            <tr key={value._id}>
+                                <td>{value.data_insercao}</td>
+                                <td>{value.valor.toFixed(2)}</td>
+                                <td>{value.descricao}</td>
+                            </tr>
+                        );
+                    })}
 
                 </tbody>
             </Table>        
@@ -69,14 +106,4 @@ export default class caixaList extends React.Component {
         
       </div>
     );
-  }
 }
-
-/*
-    valor_entrada: Number,
-    valor_saida: Number,
-    descricao: String,
-    status_movimento: Number,
-    data_insercao: Date
-
-*/

@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const routes = require('./routes');
 
 /*app.use(
@@ -8,12 +9,19 @@ const routes = require('./routes');
     }),
 );*/
 
+const corsConfig = {
+  origin:'http://localhost:3000', 
+  credentials:true,            
+  optionSuccessStatus:200
+};
+
 mongoose
-  .connect('mongodb://localhost:27017/simplecoca', { useNewUrlParser: true })
+  .connect('mongodb://mongo:27017/simplecoca', { useNewUrlParser: true })
   .then(() => {
 
     //console.log('Conectou ao banco!');
     const app = express();
+    app.use(cors(corsConfig));
     app.use(express.json());
     app.use('/api', routes);
 
