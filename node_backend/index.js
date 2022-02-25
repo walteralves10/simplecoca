@@ -16,7 +16,7 @@ const corsConfig = {
 };
 
 mongoose
-  .connect('mongodb://mongo:27017/simplecoca', { useNewUrlParser: true })
+  .connect('mongodb://localhost:27017/simplecoca', { useNewUrlParser: true })
   .then(() => {
 
     //console.log('Conectou ao banco!');

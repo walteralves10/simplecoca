@@ -60,12 +60,11 @@ export default class Formulario extends React.Component {
         }
 
         const caixaObject = {
-          valor: parseFloat(this.state.valor),
-          descricao: this.state.descricao,
-          status_movimento: this.state.status,
+          valor: parseFloat(this.state.formData.valor),
+          descricao: this.state.formData.descricao,
+          status_movimento: this.state.formData.status,
           data_insercao: new Date().toLocaleDateString() 
         };
-        
         
         axios.post('http://localhost:8000/api/caixas', caixaObject)
         .then(res => {
