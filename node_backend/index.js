@@ -23,7 +23,7 @@ mongoose
     const app = express();
     app.use(cors(corsConfig));
     app.use(express.json());
-    app.use('/api', routes);
+    app.use('/simplecoca', routes);
 
     /*app.get("/", (req, res) => {
         res.json({ message: "Oi Express!" });

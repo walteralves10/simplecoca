@@ -1,35 +1,39 @@
 import React, {useState, useEffect} from "react";
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 
-import Modal from './ModalAddRegister';
+import API from "../../services/Api";
+import Modal from '../../components/Modal/ModalCashier';
 
-export default function CaixaList() {
+export default function Cashier() {
 
-    const [caixaEntradas, setCaixaEntradas] = useState([]);
-    const [caixaSaidas, setCaixaSaidas] = useState([]);
+    const [cashierInput, setCashierInputs] = useState([]);
+    const [cashierExits, setCashierExits] = useState([]);
     const [caixaTotal, setCaixaTotal] = useState(0);
 
+    async function getInputs() {
+        const inputs = await API.get("/caixas/entradas");
+        setCashierInputs(inputs.data);
+    }
+    async function getExits() {
+        const saidas = await API.get("/caixas/saidas");
+        setCashierExits(saidas.data);
+    }
+    async function getTotal() {
+        const total = await API.get("/caixas/total");
+        setCaixaTotal(total.data.total);
+    }
+
     useEffect(() => {
-        (async () => {
-
-            const entradas = await axios.get("http://localhost:8000/api/caixas/entradas");
-            setCaixaEntradas(entradas.data);
-
-            const saidas = await axios.get("http://localhost:8000/api/caixas/saidas");
-            setCaixaSaidas(saidas.data);
-
-            const total = await axios.get("http://localhost:8000/api/caixas/total");
-            setCaixaTotal(total.data.total);
-
-        })();
+        getInputs();
+        getExits();
+        getTotal();
     }, []);
 
     return (
       <div className="lista">
 
         <div className="div-modal">
-            <Modal />
+            <Modal getInputs={getInputs} getExits={getExits} getTotal={getTotal} />
         </div>  
 
         <div className="div-total">
@@ -39,14 +43,14 @@ export default function CaixaList() {
 
                     <tr>
                     <th>Total</th>
-                    <th>{caixaTotal}</th>
+                    <th>R$ {caixaTotal.toFixed(2)}</th>
                     </tr>
 
                 </tbody>
             </Table>  
         </div>
 
-        <div className="div-table-entradas">
+        <div className="div-table-inputs">
             <h4>Entradas</h4>
 
             <Table striped bordered hover>
@@ -61,11 +65,11 @@ export default function CaixaList() {
                 </thead>
                 <tbody>
 
-                    {caixaEntradas.map(value => {
+                    {cashierInput.map(value => {
                         return(
                             <tr key={value._id}>
                                 <td>{value.data_insercao}</td>
-                                <td>{value.valor.toFixed(2)}</td>
+                                <td>R$ {value.valor.toFixed(2)}</td>
                                 <td>{value.descricao}</td>
                             </tr>
                         );
@@ -75,7 +79,7 @@ export default function CaixaList() {
             </Table>        
         </div>
 
-        <div className="div-table-saida">
+        <div className="div-table-exits">
             <h4>Saidas</h4>
 
             <Table striped bordered hover>
@@ -90,11 +94,11 @@ export default function CaixaList() {
                 </thead>
                 <tbody>
 
-                    {caixaSaidas.map(value => {
+                    {cashierExits.map(value => {
                         return(
                             <tr key={value._id}>
                                 <td>{value.data_insercao}</td>
-                                <td>{value.valor.toFixed(2)}</td>
+                                <td>R$ {value.valor.toFixed(2)}</td>
                                 <td>{value.descricao}</td>
                             </tr>
                         );
