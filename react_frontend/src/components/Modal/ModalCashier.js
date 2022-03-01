@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import 'bootstrap/dist/css/bootstrap.css';
 
 import API from "../../services/Api";
 import Alert from '../Alert/Alert';
@@ -52,11 +51,12 @@ export default function ModalCashier(props) {
           .then(res => {
             console.log(res.data);
             props.getTotal();
-            if(res.data.status_movimento === "entrada") {
-              props.getInputs();
-            } else {
-              props.getExits();
-            }
+            props.getAllCashier();
+            // if(res.data.status_movimento === "entrada") {
+            //   props.getInputs();
+            // } else {
+            //   props.getExits();
+            // }
           });
       
           setState(old => ({
@@ -71,7 +71,8 @@ export default function ModalCashier(props) {
               <Button 
               style={{
                 float: "right",
-                margin: "10px 0px",
+                height: "30px",
+                font: "icon"
               }} 
               variant="primary" 
               onClick={handleShow}

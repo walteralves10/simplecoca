@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import 'bootstrap/dist/css/bootstrap.css';
 
 import {
     BrowserRouter as Router,
@@ -13,7 +12,7 @@ import {
     Link
   } from "react-router-dom";  
 
-import Caixa from "./cashier/Cashier";
+//import Caixa from "./cashier/Cashier";
 import CashierMovement from "./cashier/CashierMovement";
 import Home from "./home/Home";
 
